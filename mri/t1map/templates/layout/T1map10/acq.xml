@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<template name="Acquire" element="panels" type="acquisition" >
+  <group loc="0 0" size="893 270" label="Scan"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    enable="no"
+    reference="acqScan"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+  <group loc="0 0" size="670 250" style="PlainText"
+    label="Plan"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    enable="no"
+    reference="acqPlan"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+  <group loc="0 0" size="820 204" label="Acq"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    enable="no"
+    reference="acqAcq"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+</template>

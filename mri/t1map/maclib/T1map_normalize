@@ -1,0 +1,12 @@
+read_on=1
+encode_on=1
+ir_on=0
+TR=0.25
+encodes=256
+nv=256
+angle = 20.0
+pss = 1,2,3
+slices=3
+nst = 3
+t1pts = 1
+

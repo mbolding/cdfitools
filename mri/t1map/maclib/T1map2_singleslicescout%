@@ -1,0 +1,7 @@
+TR = 0.2
+t_ns =1
+resolution = 128
+t1values = 1
+imagetype = 0
+TIR = 0.001
+angle = 30

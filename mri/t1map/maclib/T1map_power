@@ -1,0 +1,16 @@
+read_on=0
+encode_on=0
+ir_on=0
+pss=sliceoff
+TR=2.0
+encodes=1
+nv=1
+cur_angle = 90
+nv=1
+ne=1
+Power=maxpower-10,maxpower-9,maxpower-8,maxpower-7,maxpower-6,maxpower-5,maxpower-4,maxpower-3,maxpower-2,maxpower-1,maxpower
+sw = 16000
+np = 8192
+su
+
+

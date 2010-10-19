@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<template name="T1map2-Study" element="panels" type="sample" >
+  <group loc="0 0" size="590 210" style="PlainText"
+    label="Info"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    reference="sampInfo"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+  <group loc="0 0" size="810 220" style="PlainText"
+    label="Shim"
+    vq="system"
+    show="$VALUE = (system='spectrometer')"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    reference="sampShim"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+</template>

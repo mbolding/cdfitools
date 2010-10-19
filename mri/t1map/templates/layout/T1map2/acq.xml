@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<template name="T1map2-Acquire" element="panels" type="acquisition" >
+  <group loc="0 0" size="800 203" label="Scan"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    reference="acqScan"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+  <group loc="0 0" size="670 220" style="PlainText"
+    label="Plan"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    reference="acqPlan"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+  <group loc="0 0" size="820 200" label="Acq"
+    bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    reference="acqAcq"
+    useref="yes"
+    expanded="no"
+    >
+  </group>
+</template>

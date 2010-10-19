@@ -1,0 +1,158 @@
+
+.input0
+{
+    background: #DDEEDD; /*#e0e8ea;*/ /*#e7f0f4;*/ /* #dee7ec;*/  /* #eef7f7; */
+    border: 2px solid #889988;
+    border-style: solid solid solid solid;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: normal;
+    font-family: Veranda, Arial, Helvetica, sans-serif;
+    text-align: left
+}
+
+.input1
+{
+    background: #ffffff; /* #f0f0fa; */ /* #e0e8ea;*/ /*#e7f0f4;*/ /* #dee7ec;*/ /* #eef7f7; */
+    border: 1px solid #FFFFFF; /* #5c7c8b; */  /* #8cacbb; */
+    border-style: solid solid solid solid;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: normal;
+    font-family: Veranda, Arial, Helvetica, sans-serif;
+    text-align: left
+}
+
+.processbutton
+{
+  background: #EEEEEE;
+  border: 1px solid #888888;
+  border-style: solid solid solid solid;
+  text-align: center;
+  padding: 0em 0em 0em 0em;
+}
+
+.processbutton a
+{
+  text-decoration: none;
+  color: #000000;
+}
+
+.banner
+{
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 18pt;
+    font-weight: bold;  
+    color: #555555; /* #5d90a7;*/ /*#0000D0;*/
+}
+.banner a
+{
+    text-decoration: none;
+    color: #000000; /*#5d90a7;*/
+}
+.banner a:hover
+{
+    color: #7db0c7;
+}
+
+body
+{
+//  background-image: url("bk.gif");
+//  background-repeat: repeat-y; 
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.colheads
+{
+  font-weight: bold;
+  background: #8888B8; /* #bdc7d7; */ /* #dee7ec;*/ /* #eef7f7; */
+  text-align: center;
+  font-size:14;
+  color: #ffffff;
+}
+.colheads1
+{
+  font-weight: bold;
+  background: #FFFFFF; /* #f0f0fa; */
+  text-align: center;
+  font-size: 12;
+  color: #000000;
+}
+
+.invlink
+{
+  text-decoration: none;
+  color: black;
+}
+
+.invtxt
+{
+  color: #666666;
+  font-size: 10pt;
+}
+.makelnk
+{
+  font-size: 10pt;
+  text-decoration: none;
+  color: blue; //#666666;
+}
+.makelnk:hover
+{
+  color: blue;
+  text-decoration: underline;
+}
+
+.cmd
+{
+  font-family: courier;
+}
+.cmd2
+{
+  font-family: courier;
+  font-size: 12;
+  font-weight: bold;
+}
+
+.nav
+{
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    /*font-weight: bold;  */
+    color: #3030DD;
+    text-align: right;
+    padding: 0em 1em 0em 0em;
+}
+.nav a
+{
+    text-decoration: none;
+    color: #3d7087;
+}
+.nav a:hover
+{
+    /*color: #FFFFFF; */ /* #6da0b7;*/
+    /*background: #3d7087;*/
+    color: #66aaff;
+}
+
+.filter a
+{
+  text-decoration: none;
+  color: #335577;
+}
+.filter a:hover
+{
+  color: #66aaff; 
+}
+
+.recon_res
+{
+  font-size: 12;
+  background: #7777CC;
+}
+.recon_res tr
+{
+  background: #F8F8F8;
+}
+
+.grplabel
+{
+  font-weight: bold;
+  font-size: 12;
+}

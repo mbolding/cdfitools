@@ -1,0 +1,13 @@
+read_on=0
+encode_on=0
+ir_on=0
+TR=2.0
+encodes=1
+nv=1
+pss = sliceoff
+ne =1
+sw = 16000
+np = 8192
+cur_angle = 30
+su
+

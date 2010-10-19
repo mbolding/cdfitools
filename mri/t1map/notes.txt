@@ -1,0 +1,3 @@
+mag prepped fast gradient echo sequence for Varian UnityInova vnmrj interface
+
+tar up the directory that contains this file and then unpack in vnmrsys

@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<template name="acqScan" element="pages" type="acquisition" >
+  <group size="893 270" label="Scan" bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    enable="no"
+    reference="acqScan"
+    useref="no"
+    expanded="yes"
+    >
+    <entry loc="640 20" size="40 20" style="PlainText"
+      vq="Power"
+      vc="Power=$VALUE"
+      set="$VALUE=Power"
+      disable="Grayed out"
+      />
+    <button loc="540 170" size="80 20" style="PlainText"
+      label="IR 256"
+      vc="T1map2_ircontrast256"
+      />
+    <button loc="540 150" size="80 20" style="PlainText"
+      label="IR 128"
+      vc="T1map2_ircontrast128"
+      />
+    <button loc="540 130" size="80 20" style="PlainText"
+      label="ms scout"
+      vc="T1map2_scoutmultislice"
+      />
+    <button loc="540 110" size="80 20" style="PlainText"
+      label="ss scout"
+      vc="T1map2_singleslicescout"
+      />
+    <menu loc="620 190" size="60 20" style="PlainText"
+      label="type"
+      vq="image_type"
+      vc="image_type=$VALUE"
+      set="$VALUE=image_type"
+      >
+      <mlabel label="no IR" chval="0"/>
+      <mlabel label="IR" chval="1"/>
+    </menu>
+    <button loc="510 210" size="110 20" style="PlainText"
+      label="Setup B1 Map"
+      vc="B1map_image"
+      />
+    <button loc="510 190" size="110 20" style="Heading2"
+      label="Setup image"
+      vc="T1map_image"
+      />
+    <button loc="800 60" size="90 20" style="PlainText"
+      label="show seq"
+      vc="dps da"
+      />
+    <button loc="710 20" size="80 60" style="PlainText"
+      label="Spectra"
+      vc="f full ft(6) vsadj ft dssh dssl da"
+      />
+    <group loc="710 90" size="180 170" bg="transparent"
+      border="None"
+      side="Top"
+      justify="Left"
+      tab="no"
+      enable="no"
+      useref="no"
+      >
+      <label loc="0 0" size="130 20" style="Heading2"
+        label="Gradient Params"
+        justify="Left"
+        />
+      <entry loc="60 20" size="60 20" style="PlainText"
+        vq="Read_Str"
+        vc="Read_Str=$VALUE"
+        set="$VALUE=Read_Str"
+        disable="Grayed out"
+        />
+      <label loc="120 80" size="60 20" style="Label1"
+        label="Hz/mm"
+        justify="Left"
+        />
+      <label loc="120 60" size="60 20" style="Label1"
+        label="Hz/mm"
+        justify="Left"
+        />
+      <label loc="120 40" size="60 20" style="Label1"
+        label="Hz/mm"
+        justify="Left"
+        />
+      <label loc="120 20" size="50 20" style="Label1"
+        label="Hz/mm"
+        justify="Left"
+        />
+      <entry loc="60 80" size="60 20" style="PlainText"
+        vq="Sel_Crush"
+        vc="Sel_Crush=$VALUE"
+        set="$VALUE=Sel_Crush"
+        disable="Grayed out"
+        />
+      <entry loc="60 60" size="60 20" style="PlainText"
+        vq="IR_Grad_Str"
+        vc="IR_Grad_Str=$VALUE"
+        set="$VALUE=IR_Grad_Str"
+        disable="Grayed out"
+        />
+      <entry loc="60 40" size="60 20" style="PlainText"
+        vq="Slice_Str"
+        vc="Slice_Str=$VALUE"
+        set="$VALUE=Slice_Str"
+        disable="Grayed out"
+        />
+      <label loc="110 140" size="30 20" style="Label1"
+        label="ms"
+        justify="Left"
+        />
+      <label loc="110 120" size="30 20" style="Label1"
+        label="ms"
+        justify="Left"
+        />
+      <entry loc="70 140" size="40 20" style="Label1"
+        vq="ramp_lens"
+        vc="ramp_lens=$VALUE"
+        set="$VALUE=ramp_lens"
+        disable="Grayed out"
+        />
+      <entry loc="70 120" size="40 20" style="PlainText"
+        vq="ramp_lenr"
+        vc="ramp_lenr=$VALUE"
+        set="$VALUE=ramp_lenr"
+        disable="Grayed out"
+        />
+      <label loc="0 120" size="70 20" style="Label1"
+        label="RampRead"
+        justify="Left"
+        />
+      <label loc="110 100" size="30 20" style="Label1"
+        label="sec"
+        justify="Left"
+        />
+      <entry loc="60 100" size="50 20" style="PlainText"
+        vq="PE_length"
+        vc="PE_length=$VALUE"
+        set="$VALUE=PE_length"
+        disable="Grayed out"
+        />
+      <label loc="0 140" size="70 20" style="Label1"
+        label="Rampslice"
+        justify="Left"
+        />
+      <label loc="0 100" size="60 20" style="Label1"
+        label="PE Dur."
+        justify="Left"
+        />
+      <label loc="0 80" size="60 20" style="Label1"
+        label="Crush"
+        justify="Left"
+        />
+      <label loc="0 60" size="60 20" style="Label1"
+        label="IR"
+        justify="Left"
+        />
+      <label loc="0 40" size="60 20" style="Label1"
+        label="Slice"
+        justify="Left"
+        />
+      <label loc="0 20" size="60 20" style="Label1"
+        label="Read"
+        justify="Left"
+        />
+    </group>
+    <button loc="510 80" size="110 20" style="Heading2"
+      label="Go 1D"
+      vc="go"
+      />
+    <entry loc="620 0" size="60 20" style="PlainText"
+      vq="sfrq"
+      vc="sfrq=$VALUE"
+      set="$VALUE=sfrq"
+      disable="Grayed out"
+      />
+    <entry loc="620 40" size="20 20" style="PlainText"
+      vq="Slice_Trim"
+      set="$VALUE=size('Slice_Trim')"
+      disable="Grayed out"
+      />
+    <button loc="710 0" size="80 20" style="PlainText"
+      label="freq set"
+      vc="f full ft vsadj peak:$ht,cr dres movetof"
+      />
+    <group loc="0 40" size="250 200" style="PlainText"
+      bg="transparent"
+      border="None"
+      side="Top"
+      justify="Left"
+      tab="no"
+      enable="no"
+      reference="trstuff"
+      useref="no"
+      expanded="yes"
+      >
+      <label loc="0 80" size="60 20" style="Heading2"
+        label="No. TIs"
+        justify="Left"
+        />
+      <check loc="180 40" size="60 20" style="PlainText"
+        label="IR on"
+        vq="ir_on"
+        vc="ir_on=1"
+        vc2="ir_on=0"
+        set="$VALUE=ir_on"
+        />
+      <menu loc="170 170" size="60 20" style="Heading2"
+        vq="nv resolution"
+        vc="nv=$VALUE"
+        set="$VALUE=nv"
+        show="on('nv'):$VALUE"
+        >
+        <mlabel label="0" chval="0"/>
+        <mlabel label="64" chval="64"/>
+        <mlabel label="128" chval="128"/>
+        <mlabel label="256" chval="256"/>
+        <mlabel label="512" chval="512"/>
+        <mlabel label="1024" chval="1024"/>
+      </menu>
+      <entry loc="110 100" size="70 20" style="PlainText"
+        vq="ir_len"
+        vc="ir_len=$VALUE"
+        set="$VALUE=ir_len"
+        disable="Grayed out"
+        />
+      <label loc="0 100" size="60 20" style="Heading2"
+        label="IR Len"
+        justify="Left"
+        />
+      <label loc="0 130" size="110 20" style="Heading1"
+        label="Data Matrix"
+        justify="Left"
+        />
+      <label loc="0 150" size="80 20" style="Heading2"
+        label="resolution"
+        justify="Left"
+        />
+      <entry loc="110 150" size="80 20" style="PlainText"
+        vq="resolution"
+        vc="resolution=$VALUE"
+        set="$VALUE=resolution"
+        disable="Grayed out"
+        />
+      <entry loc="110 20" size="70 20" style="PlainText"
+        vq="extra_TE"
+        vc="extra_TE=$VALUE/1000"
+        set="$VALUE=extra_TE*1000.0"
+        digits="1"
+        disable="Grayed out"
+        />
+      <entry loc="110 80" size="70 20" style="PlainText"
+        vq="t1values"
+        vc="t1values=$VALUE"
+        set="$VALUE=t1values"
+        disable="Grayed out"
+        />
+      <entry loc="110 60" size="70 20" style="PlainText"
+        vq="nt"
+        vc="nt=$VALUE"
+        set="$VALUE=nt"
+        disable="Grayed out"
+        />
+      <entry loc="110 0" size="70 20" style="PlainText"
+        vq="TR"
+        vc="TR=$VALUE/1000.0"
+        set="$VALUE=TR*1000.0"
+        show="on('TR'):$VALUE"
+        digits="1"
+        disable="Grayed out"
+        />
+      <entry loc="110 40" size="70 20" style="PlainText"
+        vq="TIR"
+        vc="TIR=$VALUE/1000.0"
+        set="$VALUE=TIR*1000.0"
+        show="on($TIR):$VALUE"
+        digits="1"
+        disable="Grayed out"
+        />
+      <menu loc="110 170" size="60 20" style="Heading2"
+        label="menu"
+        vq="np resolution"
+        vc="np=$VALUE*2"
+        set="$VALUE=np/2"
+        >
+        <mlabel label="64" chval="64"/>
+        <mlabel label="128" chval="128"/>
+        <mlabel label="256" chval="256"/>
+        <mlabel label="512" chval="512"/>
+        <mlabel label="1024" chval="1024"/>
+      </menu>
+      <label loc="0 170" size="80 20" style="Heading2"
+        label="RO x PE"
+        justify="Left"
+        />
+      <label loc="70 40" size="40 20" style="Heading2"
+        label="(ms)"
+        justify="Center"
+        />
+      <label loc="70 20" size="40 20" style="Heading2"
+        label="(ms)"
+        justify="Center"
+        />
+      <label loc="70 0" size="40 20" style="Heading2"
+        label="(ms)"
+        justify="Center"
+        />
+      <label loc="0 20" size="60 20" style="Heading2"
+        label="extra te"
+        justify="Left"
+        />
+      <label loc="0 40" size="60 20" style="Heading2"
+        label="ti"
+        justify="Left"
+        />
+      <label loc="0 60" size="80 20" style="Heading2"
+        label="Averages"
+        justify="Left"
+        />
+      <label loc="0 0" size="60 20" style="Heading2"
+        label="tr"
+        justify="Left"
+        />
+    </group>
+    <textmessage loc="350 220" size="120 20" style="Heading2"
+      label="enzo"
+      vq="rfcoil"
+      set="$VALUE=rfcoil"
+      show="on('rfcoil'):$VALUE"
+      />
+    <label loc="260 220" size="80 20" style="Heading2"
+      label="RF coil"
+      justify="Left"
+      />
+    <button loc="510 60" size="110 20" style="PlainText"
+      label="Read Trim"
+      vc="T1map_readtrim"
+      />
+    <button loc="510 40" size="110 20" style="PlainText"
+      label="Slice Trim"
+      vc="T1map_slicetrim"
+      />
+    <entry loc="620 60" size="20 20" style="PlainText"
+      vq="Read_Trim"
+      set="$VALUE=size('Read_Trim')"
+      disable="Grayed out"
+      />
+    <entry loc="640 60" size="60 20" style="PlainText"
+      vq="Read_Trim"
+      vc="Read_Trim=$VALUE"
+      set="$VALUE=Read_Trim"
+      disable="Grayed out"
+      />
+    <entry loc="640 40" size="60 20" style="PlainText"
+      vq="Slice_Trim"
+      vc="Slice_Trim=$VALUE"
+      set="$VALUE=Slice_Trim"
+      disable="Grayed out"
+      />
+    <entry loc="620 20" size="20 20" style="PlainText"
+      vq="Power"
+      set="$VALUE=size('Power')"
+      disable="Grayed out"
+      />
+    <button loc="510 20" size="110 20" style="PlainText"
+      label="Power"
+      vc="T1map_power"
+      />
+    <button loc="510 0" size="110 20" style="PlainText"
+      label="Res frequency"
+      vc="T1map_freq"
+      />
+    <button loc="800 40" size="90 20" style="PlainText"
+      label="Scan Time"
+      vc="exists('nv','parameter'):$e    if ($e&gt;0.5) then _nv endif settime"
+      />
+    <button loc="800 20" size="90 20" style="PlainText"
+      label="SAR"
+      vc="sar"
+      />
+    <textmessage loc="0 0" size="150 20" style="Heading1"
+      label="T1map10"
+      vq="pslabel"
+      set="$VALUE=pslabel"
+      />
+    <label loc="680 0" size="30 20" style="Label1"
+      label="MHz"
+      justify="Left"
+      />
+    <textmessage loc="0 18" size="150 20" style="Heading2"
+      label=" "
+      vq="name"
+      set="$VALUE=name"
+      />
+    <label loc="690 18" size="20 20" style="Label1"
+      label="dB"
+      justify="Left"
+      />
+    <group loc="260 0" size="230 220" style="PlainText"
+      vq="lro"
+      show="on('lro'):$VALUE"
+      bg="transparent"
+      border="None"
+      side="Top"
+      justify="Left"
+      tab="no"
+      enable="no"
+      reference="fovstuff"
+      useref="no"
+      expanded="yes"
+      >
+      <entry loc="130 160" size="70 20" style="PlainText"
+        vq="sliceoff"
+        vc="sliceoff=$VALUE/10.0"
+        set="$VALUE=sliceoff*10"
+        disable="Grayed out"
+        />
+      <entry loc="130 200" size="70 20" style="PlainText"
+        vq="cur_angle"
+        vc="cur_angle=$VALUE"
+        set="$VALUE=cur_angle"
+        disable="Grayed out"
+        />
+      <entry loc="130 180" size="70 20" style="PlainText"
+        vq="angle"
+        vc="angle=$VALUE"
+        set="$VALUE=angle"
+        disable="Grayed out"
+        />
+      <label loc="90 180" size="40 20" style="Heading2"
+        label="deg"
+        justify="Left"
+        />
+      <label loc="90 200" size="40 20" style="Heading2"
+        label="deg"
+        justify="Left"
+        />
+      <label loc="0 200" size="80 20" style="Heading2"
+        label="Cur. Angle"
+        justify="Left"
+        />
+      <label loc="0 180" size="60 20" style="Heading2"
+        label="Angle"
+        justify="Left"
+        />
+      <label loc="0 40" size="80 20" style="Heading2"
+        label="Phase"
+        justify="Left"
+        />
+      <label loc="0 20" size="80 20" style="Heading2"
+        label="Readout"
+        justify="Left"
+        />
+      <label loc="90 160" size="40 20" style="Heading2"
+        label="(mm)"
+        justify="Center"
+        />
+      <label loc="90 140" size="40 20" style="Heading2"
+        label="(mm)"
+        justify="Center"
+        />
+      <label loc="90 120" size="40 20" style="Heading2"
+        label="(mm)"
+        justify="Center"
+        />
+      <entry loc="130 140" size="70 20" style="PlainText"
+        vq="thk"
+        vc="thk=$VALUE"
+        set="$VALUE=thk"
+        digits="0"
+        disable="Grayed out"
+        />
+      <entry loc="130 120" size="70 20" style="PlainText"
+        vq="t_gap"
+        vc="t_gap=$VALUE"
+        set="$VALUE=t_gap"
+        disable="Grayed out"
+        />
+      <entry loc="130 100" size="70 20" style="PlainText"
+        vq="t_ns"
+        vc="t_ns=$VALUE"
+        set="$VALUE=t_ns"
+        digits="0"
+        disable="Grayed out"
+        />
+      <entry loc="130 80" size="70 20" style="PlainText"
+        vq="pro"
+        vc="gplan('setValue','pro',$VALUE/10)"
+        set="$VALUE=pro*10"
+        show="on('pro'):$VALUE"
+        digits="0"
+        disable="Grayed out"
+        />
+      <menu loc="130 60" size="90 20" style="Heading2"
+        vq="orient"
+        vc="gplan('setValue','orient','$VALUE')"
+        set="$VALUE=orient"
+        show="on('orient'):$VALUE"
+        >
+        <mlabel label="sagittal" chval="sag"/>
+        <mlabel label="coronal" chval="cor"/>
+        <mlabel label="axial" chval="trans"/>
+        <mlabel label="oblique" chval="oblique"/>
+      </menu>
+      <entry loc="130 40" size="70 20" style="PlainText"
+        vq="lpe"
+        vc="lpe=$VALUE/10"
+        set="$VALUE=lpe*10"
+        show="on('lpe'):$VALUE"
+        digits="0"
+        disable="Grayed out"
+        />
+      <entry loc="130 20" size="70 20" style="PlainText"
+        vq="lro"
+        vc="lro=$VALUE/10"
+        set="$VALUE=lro*10"
+        show="on('lro'):$VALUE"
+        digits="0"
+        disable="Grayed out"
+        />
+      <label loc="0 100" size="130 20" style="Heading2"
+        label="Slices"
+        justify="Left"
+        />
+      <label loc="0 60" size="130 20" style="Heading2"
+        label="Orientation"
+        justify="Left"
+        />
+      <label loc="0 80" size="90 20" style="Heading2"
+        label="RO offset"
+        justify="Left"
+        />
+      <label loc="90 80" size="40 20" style="Heading2"
+        label="(mm)"
+        justify="Center"
+        />
+      <label loc="90 40" size="40 20" style="Heading2"
+        label="(mm)"
+        justify="Center"
+        />
+      <label loc="0 120" size="90 20" style="Heading2"
+        label="Gap"
+        justify="Left"
+        />
+      <label loc="0 140" size="90 20" style="Heading2"
+        label="Thickness"
+        justify="Left"
+        />
+      <label loc="0 160" size="90 20" style="Heading2"
+        label="Slice Offset"
+        justify="Left"
+        />
+      <label loc="90 20" size="40 20" style="Heading2"
+        label="(mm)"
+        justify="Center"
+        />
+      <label loc="0 0" size="110 20" style="Heading1"
+        label="Slice FOV"
+        justify="Left"
+        />
+    </group>
+  </group>
+</template>

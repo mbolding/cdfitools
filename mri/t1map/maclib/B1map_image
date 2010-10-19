@@ -1,0 +1,21 @@
+read_on=1
+encode_on=1
+ir_on=0
+if (image_type=1) then ir_on=1 endif
+cur_angle = 60
+sw = Read_Str * 10.0 * lro
+np = 2*resolution
+nv = resolution
+ne = t1values
+spacing = thk + t_gap
+r1 = -(((t_ns-1)/2)*spacing)+(sliceoff*10.0)
+r1 = r1/10.0
+
+r2 = 0
+repeat
+	
+	pss[(2*r2)+1] = r1 + (r2*(spacing/10))
+	pss[(2*r2)+2] = pss[(2*r2)+1]
+	r2 = r2+1
+until r2=t_ns
+

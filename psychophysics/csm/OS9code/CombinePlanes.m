@@ -1,0 +1,1 @@
+function combPlane = CombinePlanes(plane)mult = 2;combPlane = plane{1}-1;for n = 2:length(plane)    combPlane = combPlane+(plane{n}-1)*mult;    mult = mult*2;endcombPlane = combPlane+1;

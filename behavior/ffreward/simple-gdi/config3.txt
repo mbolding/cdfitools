@@ -1,0 +1,40 @@
+# Add comment starting with '#'
+square 	: 200 200 5 15
+textbox	: 50 10
+disks	: 70 40 20 20
+
+Background	: 0.5  0.5  0.5
+Black	: 0.0  0.0  0.0 
+White	: 1.0  1.0  1.0 
+Gray	: 0.75  0.75  0.75
+
+
+TRIALS
+0 0 0 test_1  [ 500 500 500 500 ] 0
+1 1 1 test2_is_good_or_not [ 100 2000 100 100 ] 0
+2 2 2 test_3_new [ 100 100 2000 100 ] 0
+TRIAL-END
+
+make 		# ignore the rest
+
+
+
+
+#square	: width, height, line_width, spacing_lines	
+#textbox 	: height, spacing_square_box
+#radius 	: disk_square, line_width, disk_outside, spacing_square_disk)
+#timing:	: 
+
+#Background	: 0.5  0.5  0.5
+#Black		: 0.0  0.0  0.0 
+#White		: 1.0  1.0  1.0 
+#Gray		: 0.75  0.75  0.75
+
+
+#trials need to be encapsulated b/w "TRIALS" & "TRIAL-END"
+#each line contains:
+# 	environments, circle, disc, text, [timing], break 
+#		[timing] = environemnt, reward, ITI, fix
+
+
+#make 		# ignore the rest

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template type="basic" name="T1map10" author="cb" investigator=""
+    application="imaging" coil="varianmiddle" anatomy="head" time_created="20040519T132343"
+    parfile="T1map10_01" scans="T1map10" seqfil="T1map10">
+  <protocol title="T1map10" type="protocol">
+    <action  type="LIB" status="Ready" title="T1map10" exp="T1map10" time="6 min, 56 sec" macro="sqexp('T1map10_01')" data="" />
+  </protocol>
+</template>

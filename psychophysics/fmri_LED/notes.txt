@@ -1,0 +1,2 @@
+labview code to flash LEDs in various sequences
+intended to be used in a block design fMRI experiment

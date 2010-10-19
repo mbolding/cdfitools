@@ -1,0 +1,10 @@
+Sat May  4 15:23:33 2002: Experiment started
+Sat May  4 15:34:21 2002: Acquisition complete
+Thu May 16 15:51:50 2002: FID 1: Channel 1 RF power exceeds 10s SAR limit
+Thu May 16 15:51:50 2002: FID 1: Channel 1 RF power exceeds 5min SAR limit
+Thu May 16 15:51:50 2002: FID 1: Channel 1 peak RF power exceeds limit
+Thu May 16 15:51:50 2002: FID 1: Channel 2 RF power exceeds 10s SAR limit
+Thu May 16 15:51:51 2002: FID 1: Channel 2 RF power exceeds 5min SAR limit
+Thu May 16 15:51:51 2002: FID 1: Channel 2 peak RF power exceeds limit
+Thu May 16 15:51:51 2002: FID 1: RF Power Monitor Board watchdog error
+Thu May 16 15:51:51 2002: FID 1: RF Power Monitor Board selftest failed

@@ -1,0 +1,10 @@
+pavlovian reward paradigm stimulus software
+using images as the US, abstract images as the 
+CS, and looking at pupil diameter changes that 
+result
+
+this code interfaces to an eyscan eyetracker
+OpenGL is used for the stimulus presentation
+
+
+

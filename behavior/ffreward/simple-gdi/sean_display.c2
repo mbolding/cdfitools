@@ -1,0 +1,392 @@
+// based on v0.305cylopean_MAE_ACR_exp.c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <math.h>
+#include "gl\glut.h"
+#include "sean_display.h"
+#define TRUE 1 
+#define FALSE 0
+#define PI 3.1415926535897
+
+
+//SEAN
+LPSTR sean_lpCmdLine;
+int sean_nCmdShow;
+
+
+
+/* default values */
+static int winW = 1024;
+static int winH = 800;			
+int fullscreen = TRUE;
+
+/* stimulus dimensions */
+int width = 200;
+int height = 200;
+int height2 = 50;
+int space2 = 10;
+int thick = 5;
+int space =15;
+int radius = 70;
+int thick2 = 40;  // in the circle
+int radius2 = 20;   // out of the box
+int space3 = 20;  //b/w box & circle
+
+
+  //contrast
+double Color_back[3] = {1.0, 0.5, 0.5}; 
+double Color_black[3] = {0.0, 0.0, 0}; 
+double Color_white[3] = {1.0, 1.0, 1.0}; 
+double Color_gray[3] = {0.75, 0.75, 0.75}; 
+
+//trials
+int rotate_rect = 1;
+int rotate_circle= 1;
+int disc_pos = 1;
+char Text[6][64] = {"CHICAGO", "SEATLE", "NEW YORK"};
+
+
+
+/* RUN-TIME variables */
+
+char File_config[64] = {"config.txt"};
+GLuint stimulus = 111;
+GLuint stim_rect = 112;
+GLuint stim_frame = 113;
+GLuint stim_circle = 114;
+GLuint stim_disc = 115;
+
+
+/************************ Stimulus ****************************/
+void make_stim_rect(void){
+  int i, n, s;
+
+  glNewList(stim_rect, GL_COMPILE); 
+
+    glColor3dv(Color_black);
+    glRectd(-width, -height, width, height);
+    
+    n = (int)(2*width/(space+thick));
+    s = (int)(0.5*(2*width - (space*n + thick*(n+1))) +0.5*thick); 
+    glColor3dv(Color_white);
+    glLineWidth(thick); 
+    glBegin(GL_LINES); 
+    for(i=0;i<=n;i++){
+      glVertex2i(i*(thick+space) -width +s, -height); 
+      glVertex2i(i*(thick+space) -width +s, height);
+    }
+    glEnd();
+  
+  glEndList(); 
+}
+
+void make_stim_frame(void){
+
+  glNewList(stim_frame, GL_COMPILE); 
+
+    glColor3dv(Color_back);
+    glRectd(0.5*width, -height, 1.5*width, height);
+    glRectd(-0.5*width, -height, -1.5*width, height);
+    glRectd(-width, 0.5*height, width,1.5*height);
+    glRectd(-width, -0.5*height, width, -1.5*height);  
+  glEndList(); 
+}
+
+void make_stim_circle(void){
+  GLUquadricObj *Disk;
+  double angle, half_length;
+
+  glNewList(stim_circle, GL_COMPILE); 
+    glColor3dv(Color_white);
+    Disk = gluNewQuadric();
+    gluDisk(Disk, 0, radius, 32, 1);
+
+    glColor3dv(Color_black);
+    angle = asin(0.5*thick2/radius) *360/PI *0.5;
+    half_length = sqrt(radius*radius - 0.25*thick2*thick2);
+    glRectd(-0.5*thick2, -half_length, 0.5*thick2, half_length);
+
+    glColor3dv(Color_black);
+    gluPartialDisk(Disk, 0, radius, 32, 1, -angle, 2*angle);
+    gluPartialDisk(Disk, 0, radius, 32, 1, 180-angle, 2*angle);
+    gluDeleteQuadric(Disk);
+
+  glEndList(); 
+}
+
+void *font = GLUT_BITMAP_TIMES_ROMAN_24; 
+void put_text(void){
+  char TextString[64];
+  int i, string_length;
+  float x, y;
+
+  glColor3f(1.0, 0.0, 0.0);
+  sprintf(TextString, "%s", Text[disc_pos]);
+
+  x = -0.5*width + 15;
+  y = -0.5*height -space2 - height2 +0.5*(height2-24) +5;
+  
+  glRasterPos2f(x,y);
+  string_length = (int)strlen(TextString);
+  for(i=0;i<string_length;i++){
+    glutBitmapCharacter(font, TextString[i]);
+  }
+}
+
+
+void make_stimulus(int bText){
+  GLUquadricObj *Disk;
+
+  make_stim_rect();
+  make_stim_frame();
+  make_stim_circle();
+
+  glNewList(stimulus, GL_COMPILE); 
+    glPushMatrix();
+    glRotated(rotate_rect*45, 0, 0, 1);
+    glCallList(stim_rect);
+    glPopMatrix(); 
+
+    glCallList(stim_frame);
+    glPushMatrix();
+    glRotated(rotate_circle*45, 0, 0, 1);
+    glCallList(stim_circle);
+    glPopMatrix(); 
+
+    glColor3dv(Color_white);
+    Disk = gluNewQuadric();
+    glPushMatrix();
+    glTranslated((disc_pos-1)*(0.5*width+space3+radius2), (disc_pos%2)*(0.5*height+space3+radius2), 0);
+    gluDisk(Disk, 0, radius2, 32, 1);
+    glPopMatrix(); 
+    gluDeleteQuadric(Disk);
+
+    glColor3dv(Color_white);
+    glRectd(-0.5*width, -0.5*height-space2, 0.5*width, -0.5*height-space2-height2);
+
+    if(bText) put_text();
+  glEndList(); 
+
+  glutPostRedisplay();
+}
+
+
+void config_load(void){
+  FILE *fRead;
+  char String_input[256];
+  char *locater;
+
+  /*
+  if((fRead = fopen(File_config, "r")) == NULL ){
+    printf("!!ERROR!! The file '%s' is not opened(load)\n", File_config);
+  }
+  else{
+    while(!feof(fRead)) {
+      fgets(String_input, 256, fRead);
+      locater = strchr(String_input, '#');
+      if(locater != NULL) strcpy(locater, "\x0");
+      printf("%s", String_input); 
+      
+      if(strstr(String_input, "red")){
+        locater = (strchr(String_input, ':'));
+        sscanf(locater+1, "%f %f %f   %f %f %f", 
+          &Color_gray[0], &Color_gray[1], &Color_gray[2], &Color_R2[0], &Color_R2[1], &Color_R2[2]);
+      }
+      else if(strstr(String_input, "green")){
+        locater = (strchr(String_input, ':'));
+        sscanf(locater+1, "%f %f %f   %f %f %f", 
+          &Color_black[0], &Color_black[1], &Color_black[2], &Color_white[0], &Color_white[1], &Color_white[2]);
+      }
+      else if(strstr(String_input, "back")){
+        locater = (strchr(String_input, ':'));
+        sscanf(locater+1, "%f %f %f", 
+          &Color_blackack[0], &Color_blackack[1], &Color_blackack[2]);
+      }
+      else if(strstr(String_input, "anaglyph")){
+        locater = (strchr(String_input, ':'));
+        sscanf(locater+1, "%d", &anaglyph_shift);
+      }
+      else if(strstr(String_input, "make")) break;
+    }//while
+    fclose(fRead);
+    printf("\n %s loaded !!\n", File_config);
+  }//else
+  */
+}
+
+
+void myReshape(GLsizei w, GLsizei h){
+  glViewport(0, 0, w, h);
+  glMatrixMode(GL_PROJECTION);			
+  glLoadIdentity();
+  gluOrtho2D ((int)-w*0.5, (int)w*0.5, (int)-h*0.5, (int)h*0.5);
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
+  if (fullscreen){
+    glutFullScreen();
+    //glTranslatef(-128.0, 128.0, 0.0);
+    winW = 1024;
+    winH = 768;
+  }
+  else {
+    winW = w;
+    winH = h;
+  }
+  glShadeModel (GL_FLAT);  //??  
+  glutPostRedisplay();
+}
+
+void clean_screen(int none){
+
+  glNewList(stimulus, GL_COMPILE); 
+
+  glEndList();
+  glutPostRedisplay();
+}
+
+void run_trial(void){
+  disc_pos = rand()%3;
+  rotate_rect = rand()%3; 
+  rotate_circle = rand()%3;
+  make_stimulus(0);
+  glutTimerFunc(2000, make_stimulus, 1);
+  glutTimerFunc(3000, clean_screen, 1);
+}
+
+/*********** assemble DISPLAY ************************************/
+int whichkey = 32;
+
+void keyboard_demo(unsigned char key, int x, int y){
+  switch(key){
+  case 27 : 
+    printf(" ==> Demo exited \n");
+    exit(0); 
+    break;
+  
+  case 32:
+    run_trial();
+    //printf("%d %d\n", winH, winW);
+    break;
+
+  case 'a':
+      make_stimulus(0);
+      glutPostRedisplay();
+    //oppositeContrast = !oppositeContrast;
+    break;
+
+  default:
+    break;
+  }
+
+  whichkey = key;
+}
+
+void specialKeys_demo(int key, int x, int y){
+  double incr;
+
+  switch(key){
+    case GLUT_KEY_UP: 
+      incr=1;
+      break;
+    case GLUT_KEY_DOWN:
+      incr=-0.5;
+      break;
+    case GLUT_KEY_RIGHT:
+	    break;
+    case GLUT_KEY_LEFT:
+      break;
+  }
+
+  switch(whichkey){
+  case 'r':
+    break;
+  case 'g':
+    break;
+
+
+    glutPostRedisplay();
+  }
+}
+
+void Parameters_onScreen_demo(void){
+  char TextString[64];
+
+  /*
+  glColor3f(1.0, 1.0, 1.0);
+  sprintf(TextString, " [a]naglyph_shift: %d", anaglyph_shift);
+  print2screen(x_location(8, 0), y_location('t', 0), TextString); 
+
+  
+  sprintf(TextString, " R(%3.2f %3.2f %3.2f)/(%3.2f %3.2f %3.2f)", 
+    Color_gray[0], Color_gray[1],Color_gray[2],Color_R2[0],Color_R2[1],Color_R2[2]);
+  print2screen(x_location(8, 0), y_location('b', 0), TextString); 
+  sprintf(TextString, "G(%3.2f %3.2f %3.2f)/(%3.2f %3.2f %3.2f)",
+    Color_black[0], Color_black[1],Color_black[2],Color_white[0],Color_white[1],Color_white[2]);
+  print2screen(x_location(8, 3), y_location('b', 0), TextString); 
+
+  sprintf(TextString, "bg: [r]%3.2f  [g]%3.2f (b)%3.2f", 
+    Color_blackack[0], Color_blackack[1],Color_blackack[2]);
+  print2screen(x_location(8, 6), y_location('b', 0), TextString); 
+  */
+} 
+
+
+
+void displayMono(void){  
+  glDrawBuffer(GL_BACK);
+  glClearColor(Color_back[0], Color_back[1], Color_back[2], 1.0); 
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  /*
+  glColor3fv(Color_gray);
+  glPushMatrix();
+  //glTranslatef(anaglyph_shift, 0, 0);
+  glPushMatrix();
+  //glTranslatef(-disparity, height+y_offset, 0);
+  //mono_bar();
+  glPopMatrix(); 
+  //glCallList(mono_cross);
+  glPushMatrix();
+  //glTranslatef(disparity, -(height+y_offset), 0);
+  //if(oppositeContrast) glColor3fv(Color_R2); 
+  //else glColor3fv(Color_gray);
+  //mono_bar();
+  glPopMatrix(); 
+  glPopMatrix();
+  */
+
+  glCallList(stimulus);
+
+  Parameters_onScreen_demo();
+  glutSwapBuffers();
+} 
+
+
+//int main(int argc, char *argv[]){
+int sean_window(int argc, char *argv[]){
+  srand(time(NULL));
+  //config_load();
+
+  glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
+
+  glutInit(&argc, argv);
+  glutInitWindowSize(winW, winH);
+  glutInitWindowPosition(10,10);
+  glutCreateWindow(argv[0]);	
+  if (fullscreen) glutFullScreen();
+  glutReshapeFunc(myReshape); 
+
+  //fix_gl();
+
+  glutKeyboardFunc(keyboard_demo);
+  //glutSpecialFunc(specialKeys_demo);
+  glutDisplayFunc(displayMono);
+
+  glutMainLoop(); 
+  return 0;
+}

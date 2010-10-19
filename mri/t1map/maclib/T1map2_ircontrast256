@@ -1,0 +1,8 @@
+TR = 2.5
+t_ns =11
+resolution = 256
+t1values = 1
+image_type = 1
+TIR = 0.850
+angle = 90
+gain = 20

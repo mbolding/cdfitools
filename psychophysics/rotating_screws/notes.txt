@@ -1,0 +1,9 @@
+visual stimulus application for block design and retinotopy
+fMRI experiments
+
+written by Jon Grossmann when he was at UAB
+
+using OpenGL it can present counterphasing checkerboards,
+random dots fields and some other things in stereo.
+
+

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<template name="acqAcq" element="pages" type="acquisition" >
+  <group size="820 204" label="Acq" bg="transparent"
+    border="None"
+    side="Top"
+    justify="Left"
+    tab="yes"
+    reference="acqAcq"
+    useref="no"
+    expanded="yes"
+    >
+    <group loc="230 40" size="190 80" bg="transparent"
+      border="None"
+      side="Top"
+      justify="Left"
+      tab="no"
+      reference="angulation"
+      useref="no"
+      expanded="yes"
+      >
+      <entry loc="100 60" size="80 20" style="PlainText"
+        vq="phi"
+        vc="phi=$VALUE"
+        set="$VALUE=phi"
+        disable="Grayed out"
+        />
+      <entry loc="100 40" size="80 20" style="PlainText"
+        vq="psi"
+        vc="psi=$VALUE"
+        set="$VALUE=psi"
+        disable="Grayed out"
+        />
+      <entry loc="100 20" size="80 20" style="PlainText"
+        vq="theta"
+        vc="theta=$VALUE"
+        set="$VALUE=theta"
+        disable="Grayed out"
+        />
+      <label loc="0 40" size="60 20" style="Label1"
+        label="psi"
+        justify="Left"
+        />
+      <label loc="0 0" size="100 20" style="Heading2"
+        label="angulation"
+        justify="Left"
+        />
+      <label loc="0 60" size="60 20" style="Label1"
+        label="phi"
+        justify="Left"
+        />
+      <label loc="0 20" size="60 20" style="Label1"
+        label="theta"
+        justify="Left"
+        />
+    </group>
+    <group loc="650 40" size="160 100" bg="transparent"
+      border="None"
+      side="Top"
+      justify="Left"
+      tab="no"
+      useref="no"
+      >
+      <label loc="10 80" size="60 20" style="Label1"
+        label="ne"
+        justify="Left"
+        />
+      <entry loc="80 80" size="70 20" style="PlainText"
+        vq="ne"
+        vc="ne=$VALUE"
+        set="$VALUE=ne"
+        disable="Grayed out"
+        />
+      <entry loc="80 60" size="70 20" style="PlainText"
+        vq="ns"
+        vc="ns=$VALUE"
+        set="$VALUE=ns"
+        disable="Grayed out"
+        />
+      <entry loc="80 40" size="70 20" style="PlainText"
+        vq="nv"
+        vc="nv=$VALUE"
+        set="$VALUE=nv"
+        disable="Grayed out"
+        />
+      <entry loc="80 20" size="70 20" style="PlainText"
+        vq="np"
+        vc="np=$VALUE"
+        set="$VALUE=np"
+        disable="Grayed out"
+        />
+      <label loc="10 60" size="60 20" style="Label1"
+        label="ns"
+        justify="Left"
+        />
+      <label loc="10 40" size="60 20" style="Label1"
+        label="nv"
+        justify="Left"
+        />
+      <label loc="10 20" size="60 20" style="Label1"
+        label="np"
+        justify="Left"
+        />
+      <label loc="10 0" size="130 20" style="Heading2"
+        label="Loop Params."
+        justify="Left"
+        />
+    </group>
+    <entry loc="530 110" size="50 20" style="PlainText"
+      vq="maxpower"
+      vc="maxpower=$VALUE"
+      set="$VALUE=maxpower"
+      disable="Grayed out"
+      />
+    <label loc="460 110" size="70 20" style="Label1"
+      label="max power"
+      justify="Left"
+      />
+    <label loc="460 40" size="60 20" style="Heading2"
+      label="Options"
+      justify="Left"
+      />
+    <check loc="460 70" size="100 20" style="PlainText"
+      label="Read On"
+      vq="read_on"
+      vc="read_on=1"
+      vc2="read_on=0"
+      set="$VALUE=read_on"
+      />
+    <check loc="460 90" size="100 20" style="PlainText"
+      label="Encode On"
+      vq="encode_on"
+      vc="encode_on=1"
+      vc2="encode_on=0"
+      set="$VALUE=encode_on"
+      />
+    <group loc="0 40" size="230 160" bg="transparent"
+      border="None"
+      side="Top"
+      justify="Left"
+      tab="no"
+      reference="spuls_acq"
+      useref="no"
+      expanded="yes"
+      >
+      <entry loc="160 60" size="70 20" style="PlainText"
+        vq="sw"
+        vc="sw=$VALUE"
+        set="$VALUE=sw"
+        digits="1"
+        disable="Grayed out"
+        />
+      <label loc="120 80" size="40 20" style="Label1"
+        label="(ms)"
+        justify="Center"
+        />
+      <entry loc="160 140" size="70 20" style="PlainText"
+        vq="ss"
+        vc="ss=$VALUE"
+        set="$VALUE=ss"
+        digits="0"
+        disable="Grayed out"
+        />
+      <entry loc="160 120" size="70 20" style="PlainText"
+        vq="nt"
+        vc="nt=$VALUE"
+        set="$VALUE=nt"
+        digits="0"
+        disable="Grayed out"
+        />
+      <label loc="0 140" size="120 20" style="Label1"
+        label="Dummy scans"
+        justify="Left"
+        />
+      <label loc="0 120" size="120 20" style="Label1"
+        label="Averages"
+        justify="Left"
+        />
+      <entry loc="160 100" size="70 20" style="PlainText"
+        vq="gain"
+        vc="gain=$VALUE"
+        set="$VALUE=gain"
+        digits="0"
+        disable="Grayed out"
+        />
+      <entry loc="160 80" size="70 20" style="PlainText"
+        vq="at"
+        vc="at=$VALUE/1000.0"
+        set="$VALUE=at*1000.0"
+        digits="4"
+        disable="Grayed out"
+        />
+      <entry loc="160 40" size="70 20" style="PlainText"
+        vq="tof"
+        vc="tof=$VALUE"
+        set="$VALUE=tof"
+        digits="2"
+        disable="Grayed out"
+        />
+      <textmessage loc="160 20" size="70 20" style="PlainText"
+        label="199.751"
+        vq="sfrq"
+        set="$VALUE=sfrq"
+        digits="3"
+        />
+      <label loc="120 100" size="40 20" style="Label1"
+        label="(dB)"
+        justify="Center"
+        />
+      <label loc="120 60" size="40 20" style="Label1"
+        label="(Hz)"
+        justify="Center"
+        />
+      <label loc="120 40" size="40 20" style="Label1"
+        label="(Hz)"
+        justify="Center"
+        />
+      <menu loc="160 0" size="70 20" style="PlainText"
+        vq="tn"
+        vc="tn='$VALUE'"
+        set="$VALUE=tn"
+        >
+        <mlabel label="Proton" chval="H1"/>
+        <mlabel />
+      </menu>
+      <label loc="120 20" size="40 20" style="Label1"
+        label="(MHz)"
+        justify="Center"
+        />
+      <label loc="0 100" size="120 20" style="Label1"
+        label="Receiver gain"
+        justify="Left"
+        />
+      <label loc="0 80" size="120 20" style="Label1"
+        label="Acquisition time"
+        justify="Left"
+        />
+      <label loc="0 60" size="120 20" style="Label1"
+        label="Spectral width"
+        justify="Left"
+        />
+      <label loc="0 40" size="120 20" style="Label1"
+        label="Observe offset"
+        justify="Left"
+        />
+      <label loc="0 20" size="120 20" style="Label1"
+        label="Observe frequency"
+        justify="Left"
+        />
+      <label loc="0 0" size="110 20" style="Heading2"
+        label="Acquisition"
+        justify="Left"
+        />
+    </group>
+    <entry loc="350 20" size="250 20" style="PlainText"
+      vq="comment"
+      vc="comment='$VALUE'"
+      set="$VALUE=comment"
+      show="on('comment'):$VALUE"
+      digits="0"
+      disable="Grayed out"
+      />
+    <label loc="250 20" size="100 20" style="Heading1"
+      label="Comment:"
+      justify="Left"
+      />
+    <textmessage loc="350 0" size="100 20" style="Heading2"
+      label="T1map2"
+      vq="seqfil"
+      set="$VALUE=seqfil"
+      />
+    <label loc="250 0" size="100 20" style="Heading1"
+      label="Sequence"
+      justify="Left"
+      />
+    <textmessage loc="0 20" size="140 20" style="Heading2"
+      label=" "
+      vq="name"
+      set="$VALUE=name"
+      />
+    <textmessage loc="0 0" size="140 20" style="Heading1"
+      label="T1map2"
+      vq="pslabel"
+      set="$VALUE=pslabel"
+      />
+  </group>
+</template>

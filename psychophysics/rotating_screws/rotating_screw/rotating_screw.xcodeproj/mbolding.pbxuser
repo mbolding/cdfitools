@@ -1,0 +1,108 @@
+// !$*UTF8*$!
+{
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeArchitecture = i386;
+		activeBuildConfigurationName = Default;
+		activeExecutable = C22377A10CA050430058CCBA /* rotating_screw */;
+		activeTarget = 8D1107260486CEB800E47090 /* rotating_screw */;
+		codeSenseManager = C22377BC0CA0504F0058CCBA /* Code sense */;
+		executables = (
+			C22377A10CA050430058CCBA /* rotating_screw */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					243,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 254343093;
+			PBXWorkspaceStateSaveDate = 254343093;
+		};
+		sourceControlManager = C22377BB0CA0504F0058CCBA /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8D1107260486CEB800E47090 /* rotating_screw */ = {
+		activeExec = 0;
+		executables = (
+			C22377A10CA050430058CCBA /* rotating_screw */,
+		);
+	};
+	9BCEC01709B6440400BDC9EA /* rotating_screws.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {974, 61768}}";
+			sepNavSelRange = "{35181, 0}";
+			sepNavVisRange = "{34613, 1027}";
+			sepNavWindowFrame = "{{19, 12}, {978, 861}}";
+		};
+	};
+	9BCEC01809B6440400BDC9EA /* shape.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {919, 2688}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{1966, 1388}";
+			sepNavWindowFrame = "{{19, 12}, {978, 861}}";
+		};
+	};
+	9BCEC01909B6440400BDC9EA /* util.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {919, 2716}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 814}";
+			sepNavWindowFrame = "{{19, 12}, {978, 861}}";
+		};
+	};
+	C22377A10CA050430058CCBA /* rotating_screw */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = rotating_screw;
+		sourceDirectories = (
+		);
+	};
+	C22377BB0CA0504F0058CCBA /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	C22377BC0CA0504F0058CCBA /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}

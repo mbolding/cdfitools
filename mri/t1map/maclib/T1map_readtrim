@@ -1,0 +1,17 @@
+read_on=1
+encode_on=0
+ir_on=0
+TR=2.0
+encodes=1
+nv=1
+
+pss = sliceoff
+cur_angle = angle
+ne =1
+Read_Trim = 0.9,0.94,0.98,1.02,1.06,1.10
+
+sw = lro*10*Read_Str
+np = resolution*2
+
+
+su

@@ -1,0 +1,13 @@
+TR = 4.0
+t_ns =15
+resolution = 128
+t1values = 7
+image_type = 1
+TIR = 0.030
+angle = 30
+gain = 20
+thk = 1.5
+lpe = 19.2
+lro = 19.2
+t_gap = 0
+
