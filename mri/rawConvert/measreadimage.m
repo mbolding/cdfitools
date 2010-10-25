@@ -3,15 +3,15 @@
 % page
 % call the function, data and MDH are in matlab format
 if exist('MeasRead','file')
-    [mdh,data]=MeasRead('meas.out');
+    [mdh,data]=MeasRead('meas.out'); % a windows .dll, see readme.txt
 else
     load testData2Lphantom
 end
-%strip the additional ADC at the end
+ShowFigs=1; % set to 1 to show images and anything else not to.
+% strip the additional ADC at the end
 mysize=size(data);
 data=data(1:mysize(1),1:mysize(2)-1);
 mysize=size(data);
-% mdh=mdh(1:mysize(1),1:1);
 mdh=mdh(1:mysize(2));
 % example showing how to access the data in the mdh structure
 % (Maybe the selection of structs was not so smart after all, 
@@ -61,15 +61,17 @@ for idx = Slices
     imagdata = 1i*slicedata(2:2:end,:);
     slicedata = (realdata + imagdata);
     RawData(:,:,FigPos) = slicedata;
-    fftdata=fftshift(fft2(fftshift(RawData(:,:,FigPos))));
-    subplot(3,SliceMax,FigPos)
-    imagesc(abs(fftdata));
-    axis off
-    axis image
-    subplot(3,SliceMax,FigPos+SliceMax)
-    imagesc(angle(fftdata));
-    axis off
-    axis image
+    if(ShowFigs==1)
+        fftdata=fftshift(fft2(fftshift(RawData(:,:,FigPos))));
+        subplot(3,SliceMax,FigPos)
+        imagesc(abs(fftdata));
+        axis off
+        axis image
+        subplot(3,SliceMax,FigPos+SliceMax)
+        imagesc(angle(fftdata));
+        axis off
+        axis image
+    end
 end
 
 %% image parameters FIXME, need to read from meas.asc
@@ -187,10 +189,12 @@ for a=1:res
 end
 
 %% plot it
-FigPos = 0;
-for idx = 1:SliceMax
-    FigPos=FigPos+1;
-    subplot(3,SliceMax,FigPos+SliceMax*2)
-    imagesc(abs(log(InData(2:2:end,:,1,idx,1))));
-    axis image
+if(ShowFigs==1)
+    FigPos = 0;
+    for idx = 1:SliceMax
+        FigPos=FigPos+1;
+        subplot(3,SliceMax,FigPos+SliceMax*2)
+        imagesc(abs(log(InData(2:2:end,:,1,idx,1))));
+        axis image
+    end
 end
