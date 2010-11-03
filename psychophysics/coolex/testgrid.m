@@ -6,7 +6,7 @@ if ~exist('type','var') ; type = 0 ; end;
 s=max(Screen('Screens'));
 w=Screen('OpenWindow', s);
 [wWidth, wHeight]=Screen('WindowSize', w);
-Screen('FillRect', w, 0);
+Screen('FillRect', w, 100);
 
 % Make up test values
 numDemoLines=10;
@@ -34,6 +34,9 @@ stretchFactors{1}=1;
 stretchFactors{2}=1;
 stretchFactors{3}=1;
 
+Screen('DrawLine', w, [255 255 255], 0, wHeight/2,  wWidth, wHeight/2, 5);
+Screen('DrawLine', w, [255 255 255], wWidth/4, 0,  wWidth/4, wHeight, 5);
+Screen('DrawLine', w, [255 255 255], 3*wWidth/4, 0,  3*wWidth/4, wHeight, 5);
 
 %Screen 'LineStipple' reads back the current state.
 [isStippleEnabled, stippleStretchFactor, stipplePattern]=Screen('LineStipple',w);

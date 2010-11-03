@@ -8,7 +8,6 @@ function em_solid
 
 %% interactive parameters
 fprintf('\n***\nstarting.\n click user response button to start');
-
 % wait for user ressponse to confirem button is connected, mouse button 3
 buttons = [0 0 0 0 0 ]; while ~buttons(3) ; [~,~,buttons] = GetMouse; WaitSecs(0.2); end
 
@@ -52,7 +51,6 @@ switch choice
         useHardwareTrigger = false;
 end
 
- 
 
 close(gcf); % close last menu.
 
@@ -74,6 +72,7 @@ outer_diameter = 18;
 numberOfSpriteFrames = 1; % The number of animation frames for our sprite
 
 % screen size
+screenNumber = max(Screen('Screens'));
 loadScreenParameters;
 
 %setup target motion
@@ -96,31 +95,8 @@ fprintf('\n');
 fprintf('%d blocks, block duration: %d seconds, block repeats: %d, total time: %d seconds\n', k, blockDuration,blockRepeats, k*blockDuration*blockRepeats);
 
 %% eyelink init
-if useEyeLink
-    % Initialization of the connection with the Eyelink Gazetracker.
-    % exit program if this fails.
-    initializedummy=0;
-    if initializedummy~=1
-        if Eyelink('initialize') ~= 0
-            fprintf('error in connecting to the eye tracker');
-            return;
-        end
-    else
-        Eyelink('initializedummy');
-    end
-    % Added a dialog box to set your own EDF file name before opening
-    % experiment graphics. Make sure the entered EDF file name is 1 to 8
-    % characters in length and only numbers or letters are allowed.
-    prompt = {'Enter tracker EDF file name (1 to 8 letters or numbers)'};
-    dlg_title = 'Create EDF file';
-    num_lines= 1;
-    def     = {'DEMO'};
-    answer  = inputdlg(prompt,dlg_title,num_lines,def);
-    %edfFile= 'DEMO.EDF'
-    edfFile = answer{1};
-else
-    fprintf('EyeLink connection not used.\n');
-end;
+eyeLinkInit;
+
 try
     %% screen setup
     % define colors
@@ -131,8 +107,11 @@ try
     globalAlpha = 1; % opengl global alpha
     triWhiteColor = [1 1 1] * whiteColor;
     modulateColor = triWhiteColor; % [r g b] each 0-255, use to change color of target.
-    % Choose screens
-    screenNumber = max(Screen('Screens'));
+    switch stereoConfig
+        case {'dh2g'}
+            resolution = NearestResolution(screenNumber, widthScreen*2, heightScreen, 60);
+            SetResolution(screenNumber, resolution);
+    end
     [widthScreen, heightScreen]=Screen('WindowSize', screenNumber);
     % Screen is able to do a lot of configuration and performance checks on
     % open, and will print out a fair amount of detailed information when
@@ -190,60 +169,6 @@ try
     pedX = pedXdeg / degPerPixel;
     pedX2 = pedX / 2;
     
-    %% configure eyelink graphics
-    if useEyeLink
-        % Provide Eyelink with details about the graphics environment
-        % and perform some initializations. The information is returned
-        % in a structure that also contains useful defaults
-        % and control codes (e.g. tracker state bit and Eyelink key values).
-        el=EyelinkInitDefaults(window(1));
-        
-        [~, vs]=Eyelink('GetTrackerVersion');
-        fprintf('Running experiment on a ''%s'' tracker.\n', vs );
-        
-        % open file to record data to
-        i = Eyelink('Openfile', edfFile);
-        if i~=0
-            fprintf('Cannot create EDF file ''%s'' ', edfFile);
-            Eyelink( 'Shutdown');
-            return;
-        end
-        Eyelink('command', 'add_file_preamble_text ''Recorded by EyelinkToolbox demo-experiment''');
-        
-        %% SET UP eyelink TRACKER CONFIGURATION
-        % Setting the proper recording resolution, proper calibration type,
-        % as well as the data file content;
-        Eyelink('command','screen_pixel_coords = %ld %ld %ld %ld', 0, 0, widthScreen - 1, heightScreen - 1);
-        Eyelink('message', 'DISPLAY_COORDS %ld %ld %ld %ld', 0, 0, widthScreen - 1, heightScreen - 1);
-        % set calibration type.
-        Eyelink('command', 'calibration_type = HV9');
-        % set parser (conservative saccade thresholds)
-        %     Eyelink('command', 'saccade_velocity_threshold = 35');  % these two
-        %     just illustrate that you can change any variable.  change thresholds
-        %     for saccade start and end.  we probably want defaults.
-        %     Eyelink('command', 'saccade_acceleration_threshold = 9500');
-        % set EDF file contents
-        Eyelink('command', 'file_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON');
-        Eyelink('command', 'file_sample_data  = LEFT,RIGHT,GAZE,HREF,AREA,GAZERES,STATUS');
-        % set link data (used for gaze cursor)
-        Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON');
-        Eyelink('command', 'link_sample_data  = LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS');
-        % allow to use the big button on the eyelink gamepad to accept the
-        % calibration/drift correction target
-        Eyelink('command', 'button_function 5 "accept_target_fixation"');
-        
-        % make sure we're still connected.
-        if Eyelink('IsConnected')~=1
-            return;
-        end;
-        
-        % Calibrate the eye tracker
-        % setup the proper calibration foreground and background colors
-        % needs to be the same lum as expt, pupil size affects calibration
-        el.backgroundcolour = 0;
-        el.foregroundcolour = 255;
-        EyelinkDoTrackerSetup(el);
-    end
     %% make a cross
     targMask = ones(spriteSize);
     maskIndex1 = round(((spriteSize-targThickness)/2));
@@ -254,15 +179,15 @@ try
     targMask(maskIndex2:end,1:maskIndex1)=0;
     %% animation setup
     for idx = 1 : numberOfSpriteFrames
-
-            spriteFrame(idx) = Screen('MakeTexture', window(1), targMask .* greyColor); %#ok<AGROW>
-
+        
+        spriteFrame(idx) = Screen('MakeTexture', window(1), targMask .* greyColor); %#ok<AGROW>
+        
     end
     %% Init some state and other variables
     spriteFrameIndex = 1; % Which frame of the animation should we show?
     saccadeLocationIdx = 0;
     lastSaccadeTime = 0;
-    lastDimTime = 0; 
+    lastDimTime = 0;
     dimFlag = 0;
     responseFlag = 0;
     mX = centerX;
@@ -286,12 +211,16 @@ try
         fprintf('Rcvd trigger. end counter value: %d \n',countEnd)
         WaitSecs(delayAfterMriTrigger);
     else
-%         buttons = 0; % When the user clicks the mouse, 'buttons' becomes nonzero.
-%         while ~any(buttons)
-%             Screen('DrawText', window(1), 'Click to start', 0, 0, whiteColor);
-%             Screen('Flip', window(1));
-%             [~, ~, buttons] = GetMouse;
-%         end
+        %         buttons = 0; % When the user clicks the mouse, 'buttons' becomes nonzero.
+        Screen('DrawText', window(1), 'Click to start', 0, 0, whiteColor);
+        disp('click to start')
+        Screen('Flip', window(1));
+        while ~buttons(1)
+            [~, ~, buttons] = GetMouse;
+            WaitSecs(0.1);
+        end
+        disp('delay for dummy scans')
+        WaitSecs(delayAfterMriTrigger);
     end
     %% trials
     %     buttons = 0;
@@ -325,24 +254,24 @@ try
             if useEyeLink, Eyelink('Message', 'BLOCKSYNC %s', stimulusType); end;
             
             %% start block fixation for 500ms
-%             startTime = GetSecs;
-%             endTime = 0.5 + startTime;
-%             while GetSecs < endTime
-%                 mX = centerX;
-%                 mXr = mX + widthScreen;
-%                 mY = centerY;
-%                 prev_x = mX;
-%                 prev_y = mY;
-%                 % Draw the sprite at the new location.
-%                 % Screen('DrawTexture', windowPointer, texturePointer ...
-%                 % [,sourceRect] [,destinationRect] [,rotationAngle] [, filterMode] [, globalAlpha] [, modulateColor] [, textureShader] [, specialFlags] [, auxParameters]);
-%                 Screen('DrawTexture', window(1), spriteFrame(spriteFrameIndex), spriteRect, CenterRectOnPoint(spriteRect , mX, mY),0,filterMode);
-%                 Screen('DrawTexture', window(2), spriteFrame(spriteFrameIndex), spriteRect, CenterRectOnPoint(spriteRect , mXr, mY),0,filterMode);
-%                 % Call Screen('Flip') to update the screen.  Note that calling
-%                 % 'Flip' after we have both erased and redrawn the sprite prevents
-%                 % the sprite from flickering.
-%                 Screen('Flip', window(1));
-%             end
+            %             startTime = GetSecs;
+            %             endTime = 0.5 + startTime;
+            %             while GetSecs < endTime
+            %                 mX = centerX;
+            %                 mXr = mX + widthScreen;
+            %                 mY = centerY;
+            %                 prev_x = mX;
+            %                 prev_y = mY;
+            %                 % Draw the sprite at the new location.
+            %                 % Screen('DrawTexture', windowPointer, texturePointer ...
+            %                 % [,sourceRect] [,destinationRect] [,rotationAngle] [, filterMode] [, globalAlpha] [, modulateColor] [, textureShader] [, specialFlags] [, auxParameters]);
+            %                 Screen('DrawTexture', window(1), spriteFrame(spriteFrameIndex), spriteRect, CenterRectOnPoint(spriteRect , mX, mY),0,filterMode);
+            %                 Screen('DrawTexture', window(2), spriteFrame(spriteFrameIndex), spriteRect, CenterRectOnPoint(spriteRect , mXr, mY),0,filterMode);
+            %                 % Call Screen('Flip') to update the screen.  Note that calling
+            %                 % 'Flip' after we have both erased and redrawn the sprite prevents
+            %                 % the sprite from flickering.
+            %                 Screen('Flip', window(1));
+            %             end
             %% stimulus block
             startTime = GetSecs;
             endTime = blockDuration + startTime;
@@ -400,7 +329,7 @@ try
                         attnDimFraction = attnDimFraction + 1;
                     end
                 end
-
+                
                 %% Draw the sprite at the new location.
                 mY = centerY;
                 Screen('DrawTexture', window(1), spriteFrame(spriteFrameIndex), spriteRect, CenterRectOnPoint(spriteRect , mX, mY),0,filterMode,globalAlpha,modulateColor);
@@ -420,7 +349,7 @@ try
                 prev_y=mY;
                 % end block early with mouse click
                 [~,~,buttons] = GetMouse;
-                if buttons(1)
+                if buttons(2)
                     break;
                 end
                 if buttons(3) && dimFlag && ~responseFlag
@@ -463,8 +392,8 @@ try
         WaitSecs(0.5);
         Eyelink('CloseFile');
     end;
-
-
+    
+    
     
 catch %#ok<CTCH>
     % If there is an error in our try block, let's

@@ -82,7 +82,8 @@ bkgSpriteSizeDeg = 32;
 bkgDispDeg = -0.2; % static disparity of background
 % bkgDispDeg = -3; % static disparity of background
 
-
+% screen size
+screenNumber = max(Screen('Screens'));
 loadScreenParameters;
 
 spriteSizeDeg = 0;
@@ -105,31 +106,8 @@ fprintf('\n');
 fprintf('%d blocks, block duration: %d seconds, block repeats: %d, total time: %d seconds\n', k, blockDuration,blockRepeats, k*blockDuration*blockRepeats);
 
 %% eyelink init
-if useEyeLink
-    % Initialization of the connection with the Eyelink Gazetracker.
-    % exit program if this fails.
-    initializedummy=0;
-    if initializedummy~=1
-        if Eyelink('initialize') ~= 0
-            fprintf('error in connecting to the eye tracker');
-            return;
-        end
-    else
-        Eyelink('initializedummy');
-    end
-    % Added a dialog box to set your own EDF file name before opening
-    % experiment graphics. Make sure the entered EDF file name is 1 to 8
-    % characters in length and only numbers or letters are allowed.
-    prompt = {'Enter tracker EDF file name (1 to 8 letters or numbers)'};
-    dlg_title = 'Create EDF file';
-    num_lines= 1;
-    def     = {'DEMO'};
-    answer  = inputdlg(prompt,dlg_title,num_lines,def);
-    %edfFile= 'DEMO.EDF'
-    edfFile = answer{1};
-else
-    fprintf('EyeLink connection not used.\n');
-end;
+eyeLinkInit;
+
 try
     %% screen setup
     % define colors
@@ -137,8 +115,11 @@ try
     blackColor = 0;
     fgColor = whiteColor;
     bkColor = whiteColor;
-    % Choose screens
-    screenNumber = max(Screen('Screens'));
+    switch stereoConfig
+        case {'dh2g'}
+            resolution = NearestResolution(screenNumber, widthScreen*2, heightScreen, 60);
+            SetResolution(screenNumber, resolution);
+    end
     [widthScreen, heightScreen]=Screen('WindowSize', screenNumber);
     % Screen is able to do a lot of configuration and performance checks on
     % open, and will print out a fair amount of detailed information when
@@ -196,65 +177,9 @@ try
     % screen center coordinates
     centerX = widthScreen/2;
     centerY = heightScreen/2;
-    
     pedX = pedXdeg / degPerPixel;
     pedX2 = pedX / 2;
     
-    %% configure eyelink graphics
-    if useEyeLink
-        % Provide Eyelink with details about the graphics environment
-        % and perform some initializations. The information is returned
-        % in a structure that also contains useful defaults
-        % and control codes (e.g. tracker state bit and Eyelink key values).
-        el=EyelinkInitDefaults(window(1));
-        
-        [~, vs]=Eyelink('GetTrackerVersion');
-        fprintf('Running experiment on a ''%s'' tracker.\n', vs );
-        
-        % open file to record data to
-        i = Eyelink('Openfile', edfFile);
-        if i~=0
-            fprintf('Cannot create EDF file ''%s'' ', edfFile);
-            Eyelink( 'Shutdown');
-            return;
-        end
-        Eyelink('command', 'add_file_preamble_text ''Recorded by EyelinkToolbox demo-experiment''');
-        
-        %% SET UP eyelink TRACKER CONFIGURATION
-        % Setting the proper recording resolution, proper calibration type,
-        % as well as the data file content;
-        Eyelink('command','screen_pixel_coords = %ld %ld %ld %ld', 0, 0, widthScreen - 1, heightScreen - 1);
-        Eyelink('message', 'DISPLAY_COORDS %ld %ld %ld %ld', 0, 0, widthScreen - 1, heightScreen - 1);
-        % set calibration type.
-        Eyelink('command', 'calibration_type = HV9');
-        % set parser (conservative saccade thresholds)
-        %     Eyelink('command', 'saccade_velocity_threshold = 35');  % these two
-        %     just illustrate that you can change any variable.  change thresholds
-        %     for saccade start and end.  we probably want defaults.
-        %     Eyelink('command', 'saccade_acceleration_threshold = 9500');
-        % set EDF file contents
-        Eyelink('command', 'file_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON');
-        Eyelink('command', 'file_sample_data  = LEFT,RIGHT,GAZE,HREF,AREA,GAZERES,STATUS');
-        % set link data (used for gaze cursor)
-        Eyelink('command', 'link_event_filter = LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON');
-        Eyelink('command', 'link_sample_data  = LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS');
-        % allow to use the big button on the eyelink gamepad to accept the
-        % calibration/drift correction target
-        Eyelink('command', 'button_function 5 "accept_target_fixation"');
-        
-        % make sure we're still connected.
-        if Eyelink('IsConnected')~=1
-            return;
-        end;
-        
-        % Calibrate the eye tracker
-        % setup the proper calibration foreground and background colors
-        % needs to be the same lum as expt, pupil size affects calibration
-        el.backgroundcolour = 0;
-        el.foregroundcolour = 255;
-        EyelinkDoTrackerSetup(el);
-    end
-
     %% animation setup
     spriteSize = floor(spriteSize);
     bkgSpriteSize = floor(bkgSpriteSize);
@@ -279,9 +204,6 @@ try
     prev_x = mX;
     prev_y = mY;
     %% wait for trigger
-    fprintf('waiting for trigger\n');
-    Screen('DrawText', window(1), 'waiting for trigger', 0, 0, whiteColor);
-    Screen('Flip', window(1));
     if useHardwareTrigger
         % using the USB-1208 hardware counter because polling is too
         % slowwwwww and misses triggers
@@ -295,6 +217,18 @@ try
             WaitSecs(0.1);
         end
         fprintf('Rcvd trigger. end counter value: %d \n',countEnd)
+        WaitSecs(delayAfterMriTrigger);
+    else
+        %         buttons = 0; % When the user clicks the mouse, 'buttons' becomes nonzero.
+        Screen('DrawText', window(1), 'Click to start', 0, 0, whiteColor);
+        disp('click to start')
+        Screen('Flip', window(1));
+        buttons = 0;
+        while ~buttons(1)
+            [~, ~, buttons] = GetMouse;
+            WaitSecs(0.1);
+        end
+        disp('delay for dummy scans')
         WaitSecs(delayAfterMriTrigger);
     end
     %% trials
@@ -409,7 +343,9 @@ try
                 % end block early with mouse click
 %                 WaitSecs(rdsUpdateRate);
                 [~,~,buttons] = GetMouse;
-                if any(buttons), break; end;
+                if buttons(2)
+                    break;
+                end
             end
             if useEyeLink, Eyelink('Message', 'BLOCKEND %s', stimulusType); end;
         end
