@@ -13,8 +13,8 @@ fprintf('\n***\nstarting.\n');
 % with L and R half sent to different displays that are overlaid. 2 and 3
 % screens send L and R views to different displays. 1 screen no sep is for
 % testing.
-% choice = menu('Screen configuration?','dualhead2go','2 screens','3 screens', '1 screen, no sep','szv');
-choice = 1;
+choice = menu('Screen configuration?','dualhead2go','2 screens','3 screens', '1 screen, no sep','szv');
+% choice = 1;
 switch choice
     case 1
         stereoConfig = 'dh2g';
