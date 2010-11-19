@@ -9,34 +9,60 @@ w=Screen('OpenWindow', s);
 Screen('FillRect', w, 100);
 
 % Make up test values
-numDemoLines=10;
-lineWidths{1}=5;
-lineWidths{2}=5;
-xPositions=round(linspace(0, wWidth/2, numDemoLines + 2));
-xPositions=xPositions(2:end-1);
-demoLines{1}=[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
-demoLines{2}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];  
-% demoLines{3}=[1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0];
-% demoLines{4}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
+
 switch type
     case 0
         myColors{1}=[0 255 0];
         myColors{2}=[255 0 255];
+        numDemoLines=10;
+        lineWidths{1}=5;
+        lineWidths{2}=5;
+        xPositions=round(linspace(0, wWidth/2, numDemoLines + 2));
+        xPositions=xPositions(2:end-1);
+        demoLines{1}=[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
+        demoLines{2}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
+        % demoLines{3}=[1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0];
+        % demoLines{4}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
     case 1
         myColors{1}=[255 255 255];
         myColors{2}=[255 255 255];
+        numDemoLines=10;
+        lineWidths{1}=5;
+        lineWidths{2}=5;
+        xPositions=round(linspace(0, wWidth/2, numDemoLines + 2));
+        xPositions=xPositions(2:end-1);
+        demoLines{1}=[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
+        demoLines{2}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
+        % demoLines{3}=[1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0];
+        % demoLines{4}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
     otherwise
         myColors{1}=[0 0 0];
         myColors{2}=[0 0 0];
+        numDemoLines=10;
+        lineWidths{1}=5;
+        lineWidths{2}=5;
+        xPositions=round(linspace(0, wWidth/2, numDemoLines + 2));
+        xPositions=xPositions(2:end-1);
+        demoLines{1}=[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
+        demoLines{2}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
+        % demoLines{3}=[1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0];
+        % demoLines{4}=[1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
 end
 
 stretchFactors{1}=1;
 stretchFactors{2}=1;
 stretchFactors{3}=1;
 
-Screen('DrawLine', w, [255 255 255], 0, wHeight/2,  wWidth, wHeight/2, 5);
-Screen('DrawLine', w, [255 255 255], wWidth/4, 0,  wWidth/4, wHeight, 5);
-Screen('DrawLine', w, [255 255 255], 3*wWidth/4, 0,  3*wWidth/4, wHeight, 5);
+switch type
+    case {0,1}
+        Screen('DrawLine', w, [255 255 255], 0, wHeight/2,  wWidth, wHeight/2, 5);
+        Screen('DrawLine', w, [255 255 255], wWidth/4, 0,  wWidth/4, wHeight, 5);
+        Screen('DrawLine', w, [255 255 255], 3*wWidth/4, 0,  3*wWidth/4, wHeight, 5);
+    otherwise
+        Screen('DrawLine', w, [255 255 255], 0, wHeight/2,  wWidth/2, wHeight/2, 5);
+%         Screen('DrawLine', w, [255 255 255], wWidth/4, 0,  wWidth/4, wHeight, 5);
+        Screen('DrawLine', w, [255 255 255], 3*wWidth/4, 0,  3*wWidth/4, wHeight, 5);
+end
 
 %Screen 'LineStipple' reads back the current state.
 [isStippleEnabled, stippleStretchFactor, stipplePattern]=Screen('LineStipple',w);
@@ -44,7 +70,7 @@ enabledStrings={'No', 'Yes'};
 fprintf('Screen ''LineStipple'' reads back the current stippling state for a window.\n');
 fprintf('  Reading back the default state, unchanged after opening a new window:\n');
 fprintf(['    enabled:          ' enabledStrings{isStippleEnabled+1} '\n']);
-fprintf(['    stretch factor:   ' num2str(stippleStretchFactor) '\n']); 
+fprintf(['    stretch factor:   ' num2str(stippleStretchFactor) '\n']);
 fullPatternImage=repmat('_', 1, 16);
 patternImage=fullPatternImage;
 patternImage(~stipplePattern)=' ';
@@ -60,7 +86,7 @@ fprintf('Screen ''LineStipple'' also sets a new stipple state for a window.\n');
 fprintf('  Setting the new stipple state:\n');
 Screen('LineStipple',w, newStippleEnabled, newStippleStretchFactor, newStipplePattern);
 fprintf(['    enabled:          ' enabledStrings{newStippleEnabled+1} '\n']);
-fprintf(['    stretch factor:   ' num2str(newStippleStretchFactor) '\n']); 
+fprintf(['    stretch factor:   ' num2str(newStippleStretchFactor) '\n']);
 fullPatternImage=repmat('_', 1, 16);
 patternImage=fullPatternImage;
 patternImage(~newStipplePattern)=' ';
@@ -72,7 +98,7 @@ fprintf('\n');
 [isStippleEnabled, stippleStretchFactor, stipplePattern]=Screen('LineStipple',w);
 fprintf('  Reading back changed state, modified after opening a new window:\n');
 fprintf(['    enabled:          ' enabledStrings{isStippleEnabled+1} '\n']);
-fprintf(['    stretch factor:   ' num2str(stippleStretchFactor) '\n']); 
+fprintf(['    stretch factor:   ' num2str(stippleStretchFactor) '\n']);
 fullPatternImage=repmat('_', 1, 16);
 patternImage=fullPatternImage;
 patternImage(~stipplePattern)=' ';
@@ -98,6 +124,6 @@ while ~buttons(1)
     WaitSecs(0.2);
 end
 Screen('CloseAll');
-        
+
 
 

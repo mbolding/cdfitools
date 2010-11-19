@@ -1,4 +1,4 @@
-function em_rds
+function runNumber = em_rds(runNumber)
 % run an eye movement stimulus using psychophysics toolbox
 % See SpriteDemo.
 % See also MovieDemo.
@@ -7,7 +7,7 @@ function em_rds
 % 06/21/10 msb extending for use by DG and MW
 
 %% interactive parameters
-fprintf('\n***\nstarting.\n');
+fprintf('\n*** %s \nstarting run %d\n',mfilename, runNumber);
 
 % choose the screen setup for stereo. dualhead2go is one doublewide screen
 % with L and R half sent to different displays that are overlaid. 2 and 3

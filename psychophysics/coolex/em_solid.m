@@ -1,4 +1,4 @@
-function em_solid
+function runNumber = em_solid(runNumber)
 % run an eye movement stimulus using psychophysics toolbox
 % See SpriteDemo.
 % See also MovieDemo.
@@ -7,7 +7,7 @@ function em_solid
 % 06/21/10 msb extending for use by DG and MW
 
 %% interactive parameters
-fprintf('\n***\nstarting.\n click user response button or middle mouse button to start');
+fprintf('\n*** %s \nstarting run number %d.\n click user response button to start',mfilename,runNumber);
 % wait for user ressponse to confirem button is connected, mouse button 3
 buttons = [0 0 0 0 0 ]; while ~buttons(3) ; [~,~,buttons] = GetMouse; WaitSecs(0.2); end
 
@@ -15,8 +15,8 @@ buttons = [0 0 0 0 0 ]; while ~buttons(3) ; [~,~,buttons] = GetMouse; WaitSecs(0
 % with L and R half sent to different displays that are overlaid. 2 and 3
 % screens send L and R views to different displays. 1 screen no sep is for
 % testing.
-choice = menu('Screen configuration?','dualhead2go','2 screens','3 screens', '1 screen, no sep','szv');
-% choice = 1;
+% choice = menu('Screen configuration?','dualhead2go','2 screens','3 screens', '1 screen, no sep','szv');
+choice = 1;
 switch choice
     case 1
         stereoConfig = 'dh2g';
@@ -99,7 +99,6 @@ eyeLinkInit;
 
 try
     %% screen setup
-    multiflip = 1;
     % define colors
     whiteColor = 255;
     greyColor = 200;
@@ -135,7 +134,6 @@ try
             % sprites are separated by one screen width in 1 screen mode (offset and folded over) and
             % spriteSep is 0 for multiscreen mode (each sprite on own screen)
             spriteSep = widthScreen;
-            multiflip = 0;
         case {'2s','3s'}
             window(1) = Screen('OpenWindow', screenNumber, blackColor);
             window(2) = Screen('OpenWindow', screenNumber-1, blackColor);
@@ -340,7 +338,7 @@ try
                 % using multiflip to sync the window flips with dual monitors seems to
                 % improve the stereo quality.
                 
-                Screen('Flip', window(1), 0, 0, 0, multiflip);
+                Screen('Flip', window(1), 0, 0, 0, 0);
                 
                 if useEyeLink
                     Eyelink('Message','!V TARGET_POS TARG1 (%d, %d) 1 1',mX,mY);
