@@ -14,25 +14,23 @@ fprintf('\n*** %s \ncalc vis angles for Demets expts\n\n',mfilename)
 % dist in cm unless otherwise noted
 eyeToMirror = 10.0;
 
-mirrorToScreenLoc = 50;
+mirrorToScreen = 50;
 screenWidthLoc = 28;
 screenHeightLoc = 18.5;
 
-mirrorToScreenExp = 50.0;
 screenWidthExp = 26.5;
-screenHeightExp = 19;
+screenHeightExp = 8;
 
 retinotopyDiameter = screenHeightLoc;
 
 %% calculate
-screenDistLoc = eyeToMirror + mirrorToScreenLoc;
+screenDistLoc = eyeToMirror + mirrorToScreen;
 screenRatioLoc = screenHeightLoc / screenWidthLoc; % shouldnt this be 0.75??
 screenFOVDegLoc = atand(screenWidthLoc/screenDistLoc);
 retinotopyDiameterDeg = atand(retinotopyDiameter/screenDistLoc);
 
-
-screenDistExp = eyeToMirror + mirrorToScreenExp;
-screenRatioExp = screenHeightExp / screenWidthExp; % shouldnt this be 0.75??
+screenDistExp = eyeToMirror + mirrorToScreen;
+screenRatioExp = screenHeightExp / screenWidthExp; 
 screenFOVDegExp = atand(screenWidthExp/screenDistExp);
 
 %% show results

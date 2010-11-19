@@ -297,7 +297,7 @@ try
                         mX = centerX + saccadeLocations(saccadeLocationIdxs(saccadeLocationIdx));
                         mXr = mX + spriteSep;
                     case 'vergtr'
-                        mX = centerX  + (amplitudeX/vergenceDivisor) * sin(2*pi*GetSecs/Period) + pedX2;
+                        mX = centerX  + (amplitudeX/vergenceDivisor) * sin(2*pi*GetSecs/(vergenceVelDivisor*Period)) + pedX2;
                         mXr = -mX + 2*centerX + spriteSep - 2*pedX2;
                     case 'vergst'
                         if GetSecs > lastSaccadeTime

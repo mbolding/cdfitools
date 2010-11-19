@@ -3,15 +3,17 @@ spriteSizeDeg = 1; % sprite size in degrees.
 crossThicknessDeg = 0.25;
 
 % spem parameters
-averageDegPerSec = 13;
+averageDegPerSec = 16;
 % averageDegPerSec = 4;
-amplitudeXdeg = 13; % horizontal spem amplitude
+amplitudeXdeg = 12; % horizontal spem amplitude
 
 % saccade parameters
 saccadePeriod = 0.75; % time between saccades
 vergencePeriod = 2.0; 
 saccadeLocationsDeg = [-10,-5,0,5,10];
-saccadeLocationIdxs = [ 4 3 2 5 4 3 1 2 5 1 5 4 2 3 1 3 1 2 4 5 3 5 2 4 3]';
+% saccadeLocationIdxs = [ 4 3 2 5 4 3 1 2 5 1 5 4 2 3 1 3 1 2 4 5 3 5 2 4 3]';
+saccadeLocationIdxs = [ 5 3 2 1 3 2 1 2 3 5 4 2 3 1 3 1 2 4 5 3 5 4 2 3]';
+saccadeLocationIdxs = [ saccadeLocationIdxs ; (6 - saccadeLocationIdxs)];
 % saccadeLocationIdxs = [ 3 1 3 5 3 2 3 4 3 2 3 5 3 1 3 4 3 1 3 4 3 2 3 5 ]';
 % saccadeLocationIdxs = [ 3 4 5 4 3 2 1 2 3 4 5 4 ]';
 numSaccadeLocations = max(size(saccadeLocationIdxs));
@@ -19,7 +21,9 @@ numSaccadeLocations = max(size(saccadeLocationIdxs));
 % vergence center pt
 % pedXdeg = 0.2;
 pedXdeg = -0.1;
+% vergenceDivisor = 16;
 vergenceDivisor = 16;
+vergenceVelDivisor = 4;
 % vergenceDivisor = 32;
 
 %attention parameters

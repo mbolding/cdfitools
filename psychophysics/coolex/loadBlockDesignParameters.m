@@ -18,7 +18,8 @@ switch runNumber
      case 6
         % blocks, experiment design
         blocks = {'fix','vergtr','sacc','spem','vergst'};
-        
+    otherwise
+        blocks = {'vergtr','vergst'};
         
 end
 runNumber = runNumber + 1;
