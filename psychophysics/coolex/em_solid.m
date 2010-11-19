@@ -64,6 +64,7 @@ if useHardwareTrigger
 end
 delayAfterMriTrigger = 0; % seconds to wait after MRI trigger
 
+blocks = {};
 loadBlockDesignParameters;
 
 % size of target in eyelink dataviewer
@@ -72,6 +73,8 @@ outer_diameter = 18;
 numberOfSpriteFrames = 1; % The number of animation frames for our sprite
 
 % screen size
+widthScreen = 0;
+heightScreen = 0;
 screenNumber = max(Screen('Screens'));
 loadScreenParameters;
 
