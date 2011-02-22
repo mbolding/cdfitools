@@ -24,7 +24,7 @@ function SpriteDemo
 % 09/20/09 mk  Improve screenNumber selection as per suggestion of Peter April.
 
 % ------ Parameters ------
-spriteSize = 100; % The height and width of the sprite in pixels (the sprite is square)
+spriteSize = 50; % The height and width of the sprite in pixels (the sprite is square)
 numberOfSpriteFrames = 25; % The number of animation frames for our sprite
 
 try
@@ -112,12 +112,12 @@ try
                     colorR = [255 255 255];
                     disp('both')
                 case 1
-                    colorL = [255 255 255];
-                    colorR = [0 0 0];                
+                    colorL = [0 0 0];
+                    colorR = [255 255 255];                
                     disp('L')
                 case 2
-                    colorL = [0 0 0];
-                    colorR = [255 255 255];                   
+                    colorL = [255 255 255];
+                    colorR = [0 0 0];                   
                     disp('R')
             end
             WaitSecs(0.2);
