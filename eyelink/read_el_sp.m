@@ -1,18 +1,22 @@
 function trials = read_el_sp(filename)
-% progName='read_el_sp.m';
+% read_el_sp - 
+% use this to convert eyelink asc data to the .mat files we use for
+% analysis. called by process_all_asc_data
 progPath = fileparts(which(mfilename));
-resultPath=[progPath filesep 'results' filesep];
+resultPath=[pwd filesep 'results' filesep];
 
 trials=struct('eye',{}, 'target',{}, 'sac_L',{}, 'sac_R',{});
 
 if ~exist('filename','var')
-    filename = uigetfile('*.asc');
+    [filename,pathname] = uigetfile('*.asc');
+    filename = [pathname filesep filename];
 end
-txt=fileread(filename);
+fileloc = filename;
+txt=fileread(fileloc);
 
 %% collect experiment info
 
-fid = fopen(filename);
+fid = fopen(fileloc);
 % t=txt(1:10000);
 fprintf('%% read eyelink data\ncollect experiment info');
 for idx = 1:100
@@ -70,10 +74,16 @@ for idx = 1:100
     elseif strfind(oneline,'Pursuit Amplitude:')
         s = strfindRev( oneline,':',length(oneline) );
         amplitude=strtrim(s(2:end));
+    elseif strfind(oneline,'Pursuit Direction:')
+        s = strfindRev( oneline,':',length(oneline) );
+        direction=strtrim(s(2:end));
         %         t=remain;
     elseif strfind(oneline,'Period:')
         s = strfindRev( oneline,':',length(oneline) );
         period=strtrim(s(2:end));
+    elseif strfind(oneline,'Frequency:')
+        s = strfindRev( oneline,':',length(oneline) );
+        targetFrequency=strtrim(s(2:end));
         %         t=remain;
     elseif strfind(oneline,'Number of Periods:')
         s = strfindRev( oneline,':',length(oneline) );
@@ -88,12 +98,26 @@ for idx = 1:100
         nT=strtrim(s(2:end));
         %t=remain;
         fprintf('\n');
-%         break;
+    elseif strfind(oneline,'Target Size:')
+        s = strfindRev( oneline,':',length(oneline) );
+        targetSize=strtrim(s(2:end));
+        %t=remain;
+        fprintf('\n');
+    elseif strfind(oneline,'Bakground Check Size:')
+        s = strfindRev( oneline,':',length(oneline) );
+        checkSize=strtrim(s(2:end));
+        %t=remain;
+        fprintf('\n');
+    elseif strfind(oneline,'START')
+        collectedData = textscan(oneline,'%s');
+        collectedData = collectedData{1};
+        %t=remain;
+        fprintf('%s \n',collectedData{:});
+        break;
     elseif strfind(oneline,'RECORD')
         temp = sscanf(oneline,'MSG	%d !MODE RECORD %s %d %d %d');
         fprintf('found start of recording. %d Hz\n',temp(3));
         sample_rate = temp(3);
-        break;
     else
         %         t=remain;
     end
@@ -101,7 +125,7 @@ end
 fclose(fid);
 
 
-txt=fileread(filename);
+txt=fileread(fileloc);
 
 %% determine the number of trials
 numTrials=1;
@@ -184,8 +208,8 @@ for trial=1:numTrials
                 % eyePos=[eyePos; [str2double(C{1}{1})-stimulusOnset str2double(C{1}{2}) str2double(C{1}{3})] ];
                 eyePos=[eyePos; [eyeTemp(1)-stimulusOnset eyeTemp(2) eyeTemp(3)] ];
             elseif strcmp(C{1}{1}, 'MSG') && strcmp(C{1}{3},'TARGET_POS')
-                targetTemp = sscanf(L,'MSG %f TARGET_POS %f %f');
-                targetPos=[targetPos; [targetTemp(1)-stimulusOnset targetTemp(2) targetTemp(3)] ];
+                targetTemp = sscanf(L,'MSG %f TARGET_POS %f %f %f %f %f %f');
+                targetPos=[targetPos; [targetTemp(1)-stimulusOnset targetTemp(2:3)' ] ];
                 %                 targetPos=[targetPos; [str2double(C{1}{2})-stimulusOnset str2double(C{1}{4}) str2double(C{1}{5})]];
             elseif strcmp(C{1}{1}, 'MSG') && strcmp(C{1}{3},'!V') && strcmp(C{1}{4},'TARGET_POS')
 %                 MSG	5412250 !V TARGET_POS TARG1 (831, 384) 1 1
@@ -221,11 +245,16 @@ end
 %% save processed data
 of=[ascFile(1:length(ascFile)-3) 'mat'];
 
+save([resultPath of],'trials','background','period','sample_rate','direction','targetFrequency','targetSize');
+
 if strcmp(waveform,'Pseudo-random')
-    save([resultPath of],'trials','background','pseudoRandBand','sample_rate');
-else
-    save([resultPath of],'trials','background','period','sample_rate');
+    save([resultPath of],'pseudoRandBand','-append');
 end
+
+if exist('checkSize','var')
+    save([resultPath of],'checkSize','-append');
+end
+    
 
 view_trials(trials);
 
